@@ -78,9 +78,13 @@ void Cloud::Service::login(const httplib::Request &req, httplib::Response &resp)
     // 查看用户数据库，查看[用户名-密码]是否合法
     if (Util::checkUser(username, password))
     {
-        // 重定向到文件列表页面
-        resp.set_header("Location", "/list"); 
-        resp.status = 302;
+        //生成重定向路径
+        // std::string listUrl = "http://" + _svr_ip + ":" + _svr_port + "/list";
+
+        Json::Value response;
+        response["redirect"] = "http://123.249.9.114:9900/list";
+        resp.status = 200;
+        resp.set_content(response.toStyledString(), "application/json");
     }
     else
     {
